@@ -1,0 +1,59 @@
+import { Errors } from 'cs544-js-utils';
+
+
+/** a link contains a href URL and HTTP method */
+export type Link = {
+  rel: string,
+  href: string,
+  method: string
+};
+
+/** a self link using rel self */
+export type SelfLinks = {
+  self: Link & { rel: 'self' },
+};
+
+/** navigation links contain optional next and prev links in addition to
+ *  a self link.
+ */
+export type NavLinks = SelfLinks & {
+  next?: Link & { rel: 'next' },
+  prev?: Link & { rel: 'prev' },
+};
+
+export type NonPagedResult<T> = Errors.Result<T&SelfLinks>;
+export type PagedResult<T> = Errors.Result<(T&SelfLinks)[] & NavLinks>;
+
+/** a result of type T which has a links containing a self-link */
+export type LinkedResult<T> = {
+  links: SelfLinks,
+  result: T,
+};
+
+/** a response always has an isOk and HTTP status */
+export type BaseResponse = {
+  isOk: boolean,
+  status: number,
+};
+
+
+/** a non-paged successful response */
+export type NonPagedResponse<T> = BaseResponse & LinkedResult<T> & {
+  isOk: true,
+};
+
+/** a paged successful response */
+export type PagedResponse<T> = BaseResponse & {
+  isOk: true,
+  links: NavLinks,
+  result: LinkedResult<T>[],
+};
+
+/** an error response */
+export type ErrorResponse = BaseResponse & {
+  isOk: false,
+  errors: { message: string, options?: { [key:string]: string } }[],
+};
+
+export type NonPagedEnvelope<T> = NonPagedResponse<T> | ErrorResponse;
+export type PagedEnvelope<T> = PagedResponse<T> | ErrorResponse;

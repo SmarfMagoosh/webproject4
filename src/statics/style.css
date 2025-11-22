@@ -1,0 +1,169 @@
+:root {
+  --base-color: 0, 0, 192;
+  --color09: rgb(var(--base-color));
+  --color01: rgba(var(--base-color), 0.05);
+  --color02: rgba(var(--base-color), 0.1);
+  --color03: rgba(var(--base-color), 0.15);
+  --color04: rgba(var(--base-color), 0.3);
+  --max-width: 800px;
+}
+
+body {
+  color: var(--color09);
+  background-color: var(--color01);
+  max-width: var(--max-width);
+}
+
+.scroll {
+  font-size: 150%;
+  padding: 10pt;
+  width: 100%;
+}
+
+.scroll a[rel="prev"] {
+  float: left;
+  content: "<<";
+}
+.scroll a[rel="next"] {
+  float: right;
+  content: ">>";
+}
+
+.scroll a:hover, #result li .details:hover {
+  background-color: var(--color03);
+  cursor: pointer;
+}
+  
+
+table {
+  width: 100%;
+  /* border-collapse: collapse; */
+}
+table th {
+  background-color: var(--color04);
+}
+
+table th,
+table td {
+  padding: 4pt 20pt;
+  border: 2px;
+}
+
+table td.is-copy-source {
+  border-style: dotted;
+}
+
+table .numeric {
+  text-align: right;
+}
+table tr:nth-child(even) {
+  background-color: var(--color02);
+}
+table tr:nth-child(odd) {
+  background-color: var(--color03);
+}
+
+h1 {
+  text-align: center;
+}
+
+.grid-form {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  grid-gap: 2vw;
+  padding: 10px;
+} 
+
+input[type="checkbox"] {
+  width: 5%;
+}
+
+input, textarea, select {
+  width: 70%;
+}
+
+button {
+  width: 60px;
+  border-radius: 10px;
+  background-color: var(--color04);
+  width: 200px;
+}
+
+.grid-form button {
+  width: 40%;
+}
+
+button#clear {
+  background-color: red;
+}
+
+.grid-form label {
+  font-weight: bold;
+  text-align: right;
+}
+
+.grid-form label:after {
+  content: ':';
+}
+
+
+.error {
+  color: red;
+}
+
+footer li {
+  list-style: none;
+  display: inline;
+}
+footer li + li::before {
+  content: " | ";
+}
+
+.required {
+  color: red;
+}
+
+#result dl {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  /*grid-gap: 2vw;*/
+  padding: 10px;
+}
+
+#result dt {
+  font-weight: bold;
+}
+
+#result dt:after {
+  content: ':';
+}
+
+#result #search-results {
+  padding: 20px;
+}
+
+#result li {
+  list-style-type: none;
+  padding: 10px;
+  margin: 10px;
+}
+
+#result li .content {
+  font-weight: bold;
+  padding: 10px;
+  margin-right: 100px;
+}
+
+#result li .details, #result li .return-book {
+  font-style: oblique;
+  float: right;
+}
+
+.show {
+  visibility: visible;
+}
+
+.hide {
+  visibility: hidden;
+}
+
