@@ -9,10 +9,6 @@ export default function makeApp(wsUrl: string) {
   return new App(wsUrl);
 }
 
-function backendUrl(path: string): URL {
-  return new URL(path, "https://localhost:2345");
-}
-
 class App {
   private readonly wsUrl: string;
   private readonly ws: LibraryWs;
@@ -44,6 +40,7 @@ class App {
       
       const url = makeQueryUrl(`${this.wsUrl}/api/books`, { search: searchTerm });
       await this.displaySearchResults(url);
+      console.log(this.wsUrl, url);
     });
   }
   
@@ -94,7 +91,7 @@ class App {
       prevLink.addEventListener('click', async (ev) => {
         ev.preventDefault();
         this.clearErrors();
-        await this.displaySearchResults(backendUrl(links.prev!.href));
+        await this.displaySearchResults(`${this.wsUrl}${links.prev!.href}`);
       });
       scrollDiv.append(prevLink);
     }
@@ -103,7 +100,7 @@ class App {
       nextLink.addEventListener('click', async (ev) => {
         ev.preventDefault();
         this.clearErrors();
-        await this.displaySearchResults(backendUrl(links.next!.href));
+        await this.displaySearchResults(`${this.wsUrl}${links.next!.href}`);
       });
       scrollDiv.append(nextLink);
     }
@@ -112,7 +109,7 @@ class App {
   
   private async displayBookDetails(bookUrl: string) {
     this.clearResult();
-    const result = await this.ws.getBookByUrl(backendUrl(bookUrl));
+    const result = await this.ws.getBookByUrl(`${this.wsUrl}${bookUrl}`);
     const envelope = this.unwrap(result);
     if (!envelope) return;
     
@@ -199,6 +196,7 @@ class App {
       returnButton.addEventListener('click', async (ev) => {
         ev.preventDefault();
         this.clearErrors();
+        console.log(lend);
         const returnResult = await this.ws.returnBook(lend);
         
         // Check if the result has errors using isOk property

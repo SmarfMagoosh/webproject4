@@ -13,7 +13,8 @@ export function makeLibraryWs(url: string) {
 
 export class LibraryWs {
   //base url for these web services
-  private url;
+  private url: string;
+  private serverUrl: string;
 
   constructor(url: string) { 
     this.url = url; 

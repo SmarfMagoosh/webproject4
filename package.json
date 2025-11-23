@@ -16,13 +16,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "proxy": "https://localhost:2345",
   "devDependencies": {
     "parcel": "^2.12.0",
     "shx": "^0.3.4",
     "typescript": "^5.4.3"
   },
   "dependencies": {
-    "cs544-js-utils": "../cs544-js-utils-0.0.1.tgz",
-    "library-types": "library-types-0.0.1.tgz"
+    "cs544-js-utils": "file:../cs544-js-utils-0.0.1.tgz",
+    "library-types": "file:library-types-0.0.1.tgz"
   }
 }

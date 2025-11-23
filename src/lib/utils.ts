@@ -41,6 +41,3 @@ export function getFormData(form: HTMLFormElement) : Record<string, string> {
   return Object.fromEntries(pairs);
 }
 
-
-
-
