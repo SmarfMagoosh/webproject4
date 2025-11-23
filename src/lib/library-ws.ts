@@ -150,7 +150,6 @@ async function
 {
   try {
     const response = await fetch(url, options);
-    console.log(url, response);
     return Errors.okResult(await response.json() as T);
   }
   catch (err) {

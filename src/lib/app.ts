@@ -40,7 +40,6 @@ class App {
       
       const url = makeQueryUrl(`${this.wsUrl}/api/books`, { search: searchTerm });
       await this.displaySearchResults(url);
-      console.log(this.wsUrl, url);
     });
   }
   
@@ -85,7 +84,6 @@ class App {
     if (!links.prev && !links.next) return null;
     
     const scrollDiv = makeElement('div', { class: 'scroll' });
-    console.log(links);
     if (links.prev) {
       const prevLink = makeElement('a', { rel: 'prev' }, '<<');
       prevLink.addEventListener('click', async (ev) => {
@@ -142,7 +140,6 @@ class App {
     form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
       this.clearErrors();
-      const formData = getFormData(form);
       const patronId = (document.getElementById("patronId") as HTMLInputElement).value;
       
       if (!patronId) {
@@ -196,7 +193,6 @@ class App {
       returnButton.addEventListener('click', async (ev) => {
         ev.preventDefault();
         this.clearErrors();
-        console.log(lend);
         const returnResult = await this.ws.returnBook(lend);
         
         // Check if the result has errors using isOk property
