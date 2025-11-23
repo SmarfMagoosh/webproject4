@@ -41,7 +41,7 @@ export class LibraryWs {
   /** check out book specified by lend */
   //make a PUT request to /lendings
   async checkoutBook(lend: Lib.Lend) : Promise<Errors.Result<void>> {
-    const url = new URL(`${this.url}/lendings`);
+    const url = new URL(`${this.url}/api/lendings`);
     const options = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -66,8 +66,9 @@ export class LibraryWs {
 
   /** return book specified by lend */
   //make a DELETE request to /lendings
+  // TODO: possibly last fix
   async returnBook(lend: Lib.Lend) : Promise<Errors.Result<void>> {
-    const url = new URL(`${this.url}/lendings`);
+    const url = new URL(`${this.url}/api/lendings`);
     const options = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -94,7 +95,7 @@ export class LibraryWs {
   //make a GET request to /lendings with query-params set
   //to { findBy: 'isbn', isbn }.
   async getLends(isbn: string) : Promise<Errors.Result<Lib.Lend[]>> {
-    const url = new URL(`${this.url}/lendings`);
+    const url = new URL(`${this.url}/api/lendings`);
     url.searchParams.set('findBy', 'isbn');
     url.searchParams.set('isbn', isbn);
     
@@ -148,6 +149,7 @@ async function
 {
   try {
     const response = await fetch(url, options);
+    console.log(url, response);
     return Errors.okResult(await response.json() as T);
   }
   catch (err) {

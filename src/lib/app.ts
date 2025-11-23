@@ -9,6 +9,10 @@ export default function makeApp(wsUrl: string) {
   return new App(wsUrl);
 }
 
+function backendUrl(path: string): URL {
+  return new URL(path, "https://localhost:2345");
+}
+
 class App {
   private readonly wsUrl: string;
   private readonly ws: LibraryWs;
@@ -38,7 +42,7 @@ class App {
         return;
       }
       
-      const url = makeQueryUrl(`${this.wsUrl}/books`, { search: searchTerm });
+      const url = makeQueryUrl(`${this.wsUrl}/api/books`, { search: searchTerm });
       await this.displaySearchResults(url);
     });
   }
@@ -84,12 +88,13 @@ class App {
     if (!links.prev && !links.next) return null;
     
     const scrollDiv = makeElement('div', { class: 'scroll' });
+    console.log(links);
     if (links.prev) {
       const prevLink = makeElement('a', { rel: 'prev' }, '<<');
       prevLink.addEventListener('click', async (ev) => {
         ev.preventDefault();
         this.clearErrors();
-        await this.displaySearchResults(links.prev!.href);
+        await this.displaySearchResults(backendUrl(links.prev!.href));
       });
       scrollDiv.append(prevLink);
     }
@@ -98,7 +103,7 @@ class App {
       nextLink.addEventListener('click', async (ev) => {
         ev.preventDefault();
         this.clearErrors();
-        await this.displaySearchResults(links.next!.href);
+        await this.displaySearchResults(backendUrl(links.next!.href));
       });
       scrollDiv.append(nextLink);
     }
@@ -107,7 +112,7 @@ class App {
   
   private async displayBookDetails(bookUrl: string) {
     this.clearResult();
-    const result = await this.ws.getBookByUrl(bookUrl);
+    const result = await this.ws.getBookByUrl(backendUrl(bookUrl));
     const envelope = this.unwrap(result);
     if (!envelope) return;
     
@@ -141,7 +146,7 @@ class App {
       ev.preventDefault();
       this.clearErrors();
       const formData = getFormData(form);
-      const patronId = formData.patronId;
+      const patronId = (document.getElementById("patronId") as HTMLInputElement).value;
       
       if (!patronId) {
         this.displayErrors([Errors.errResult(
